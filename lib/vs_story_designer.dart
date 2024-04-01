@@ -117,7 +117,6 @@ class VSStoryDesigner extends StatefulWidget {
 
   const VSStoryDesigner(
       {required this.onDone, required this.centerText, super.key,
-      this.initialImage,
       this.giphyKey,
       this.themeType,
       this.middleBottomWidget,
@@ -143,9 +142,6 @@ class VSStoryDesigner extends StatefulWidget {
 
   /// you can pass a fileName with which image name will be created
   final String? fileName;
-
-  /// initial image
-  final File? initialImage;
 
   /// giphy api key
   final String? giphyKey;
@@ -233,6 +229,7 @@ class _VSStoryDesignerState extends State<VSStoryDesigner> {
         galleryThumbnailQuality: widget.galleryThumbnailQuality,
         centerText: widget.centerText,
         mediaPath: widget.mediaPath,
+        doneText: widget.doneText,
       ),
     );
   }

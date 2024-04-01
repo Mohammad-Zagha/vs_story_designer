@@ -42,7 +42,6 @@ class MainView extends StatefulWidget {
     required this.giphyKey,
     required this.onDone,
     super.key,
-    this.initialImage,
     this.themeType,
     this.middleBottomWidget,
     this.colorList,
@@ -58,9 +57,6 @@ class MainView extends StatefulWidget {
     this.doneText,
     this.mediaPath,
   });
-
-  /// initil image
-  final File? initialImage;
 
   /// editor custom font families
   final List<FontType>? fontFamilyList;
