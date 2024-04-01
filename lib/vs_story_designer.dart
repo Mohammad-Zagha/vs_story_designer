@@ -233,6 +233,8 @@ class _VSStoryDesignerState extends State<VSStoryDesigner> {
         centerText: widget.centerText,
         mediaPath: widget.mediaPath,
         doneText: widget.doneText,
+        emptyImageText: widget.emptyImageText,
+        savedImageText: widget.savedImageText,
       ),
     );
   }
