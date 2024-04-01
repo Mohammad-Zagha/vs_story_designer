@@ -1,8 +1,10 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
+import 'package:toastification/toastification.dart';
 import 'package:vs_story_designer/src/domain/providers/notifiers/control_provider.dart';
 import 'package:vs_story_designer/src/domain/providers/notifiers/draggable_widget_notifier.dart';
 import 'package:vs_story_designer/src/domain/providers/notifiers/painting_notifier.dart';
@@ -14,12 +16,19 @@ import 'package:vs_story_designer/src/presentation/widgets/animated_onTap_button
 import 'package:vs_story_designer/src/presentation/widgets/tool_button.dart';
 
 class TopTools extends StatefulWidget {
-  const TopTools(
-      {required this.contentKey, required this.context, super.key,
-      this.renderWidget,});
+  const TopTools({
+    required this.contentKey,
+    required this.context,
+    super.key,
+    this.renderWidget,
+    this.emptyImageText,
+    this.savedImageText,
+  });
   final GlobalKey contentKey;
   final BuildContext context;
   final Function? renderWidget;
+  final String? emptyImageText;
+  final String? savedImageText;
 
   @override
   _TopToolsState createState() => _TopToolsState();
@@ -41,22 +50,23 @@ class _TopToolsState extends State<TopTools> {
               children: [
                 /// close button
                 ToolButton(
-                    backGroundColor: Colors.black12,
-                    onTap: () async {
-                      await exitDialog(
-                              context: widget.context,
-                              contentKey: widget.contentKey,
-                              themeType: controlNotifier.themeType,)
-                          .then((res) {
-                        if (res) {
-                          Navigator.pop(context);
-                        }
-                      });
-                    },
-                    child: const Icon(
-                      Icons.close,
-                      color: Colors.white,
-                    ),),
+                  backGroundColor: Colors.black12,
+                  onTap: () async {
+                    await exitDialog(
+                      context: widget.context,
+                      contentKey: widget.contentKey,
+                      themeType: controlNotifier.themeType,
+                    ).then((res) {
+                      if (res) {
+                        Navigator.pop(context);
+                      }
+                    });
+                  },
+                  child: const Icon(
+                    Icons.close,
+                    color: Colors.white,
+                  ),
+                ),
 
                 Row(
                   children: [
@@ -64,44 +74,50 @@ class _TopToolsState extends State<TopTools> {
                       Padding(
                         padding: const EdgeInsets.only(),
                         child: _selectColor(
-                            controlProvider: controlNotifier,
-                            onTap: () {
-                              if (controlNotifier.gradientIndex >=
-                                  controlNotifier.gradientColors!.length - 1) {
-                                setState(() {
-                                  controlNotifier.gradientIndex = 0;
-                                });
-                              } else {
-                                setState(() {
-                                  controlNotifier.gradientIndex += 1;
-                                });
-                              }
-                            },),
+                          controlProvider: controlNotifier,
+                          onTap: () {
+                            if (controlNotifier.gradientIndex >=
+                                controlNotifier.gradientColors!.length - 1) {
+                              setState(() {
+                                controlNotifier.gradientIndex = 0;
+                              });
+                            } else {
+                              setState(() {
+                                controlNotifier.gradientIndex += 1;
+                              });
+                            }
+                          },
+                        ),
                       ),
                     ToolButton(
                       backGroundColor: Colors.black12,
                       onTap: () => controlNotifier.isTextEditing =
                           !controlNotifier.isTextEditing,
                       child: const ImageIcon(
-                        AssetImage('assets/icons/text.png',
-                            package: 'vs_story_designer',),
+                        AssetImage(
+                          'assets/icons/text.png',
+                          package: 'vs_story_designer',
+                        ),
                         color: Colors.white,
                         size: 20,
                       ),
                     ),
                     ToolButton(
-                        backGroundColor: controlNotifier.enableTextShadow
-                            ? Colors.white
-                            : Colors.black12,
-                        onTap: () {
-                          controlNotifier.enableTextShadow =
-                              !controlNotifier.enableTextShadow;
-                        },
-                        child: Icon(Icons.text_fields_sharp,
-                            color: controlNotifier.enableTextShadow
-                                ? Colors.black
-                                : Colors.white,
-                            size: 30,),),
+                      backGroundColor: controlNotifier.enableTextShadow
+                          ? Colors.white
+                          : Colors.black12,
+                      onTap: () {
+                        controlNotifier.enableTextShadow =
+                            !controlNotifier.enableTextShadow;
+                      },
+                      child: Icon(
+                        Icons.text_fields_sharp,
+                        color: controlNotifier.enableTextShadow
+                            ? Colors.black
+                            : Colors.white,
+                        size: 30,
+                      ),
+                    ),
                     // ToolButton(
                     //     child: const ImageIcon(
                     //       AssetImage('assets/icons/stickers.png',
@@ -114,17 +130,20 @@ class _TopToolsState extends State<TopTools> {
                     //         context: context,
                     //         giphyKey: controlNotifier.giphyKey)),
                     ToolButton(
-                        backGroundColor: Colors.black12,
-                        onTap: () {
-                          controlNotifier.isPainting = true;
-                          //createLinePainting(context: context);
-                        },
-                        child: const ImageIcon(
-                          AssetImage('assets/icons/draw.png',
-                              package: 'vs_story_designer',),
-                          color: Colors.white,
-                          size: 20,
-                        ),),
+                      backGroundColor: Colors.black12,
+                      onTap: () {
+                        controlNotifier.isPainting = true;
+                        //createLinePainting(context: context);
+                      },
+                      child: const ImageIcon(
+                        AssetImage(
+                          'assets/icons/draw.png',
+                          package: 'vs_story_designer',
+                        ),
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    ),
                   ],
                 ),
 
@@ -141,63 +160,92 @@ class _TopToolsState extends State<TopTools> {
                 // ),
 
                 ToolButton(
-                    backGroundColor: Colors.black12,
-                    onTap: () async {
-                      if (paintingNotifier.lines.isNotEmpty ||
-                          itemNotifier.draggableWidget.isNotEmpty) {
-                        await showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (BuildContext context) {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Card(
-                                      color: Colors.white,
-                                      child: Container(
-                                          margin: const EdgeInsets.all(50),
-                                          child:
-                                              const CircularProgressIndicator(),),),
-                                ],
-                              );
-                            },);
-                        for (final element in itemNotifier.draggableWidget) {
-                          if (element.type == ItemType.gif ||
-                              element.animationType != TextAnimationType.none) {
-                            setState(() {
-                              _createVideo = true;
-                            });
-                          }
+                  backGroundColor: Colors.black12,
+                  onTap: () async {
+                    if (paintingNotifier.lines.isNotEmpty ||
+                        itemNotifier.draggableWidget.isNotEmpty) {
+                      unawaited(
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Card(
+                                  color: Colors.white,
+                                  child: Container(
+                                    margin: const EdgeInsets.all(50),
+                                    child: const CircularProgressIndicator(),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      );
+                      for (final element in itemNotifier.draggableWidget) {
+                        if (element.type == ItemType.gif ||
+                            element.animationType != TextAnimationType.none) {
+                          setState(() {
+                            _createVideo = true;
+                          });
                         }
-                        if (_createVideo) {
-                          debugPrint('creating video');
-                          await widget.renderWidget!();
-                        } else {
-                          debugPrint('creating image');
-                          final response = await takePicture(
-                              contentKey: widget.contentKey,
-                              context: context,
-                              saveToGallery: true,
-                              fileName: controlNotifier.folderName,);
-                          if (response) {
-                            showToast('Successfully saved');
-                          } else {}
-                        }
-                        Navigator.of(context, rootNavigator: true).pop();
-                      } else {
-                        showToast('Design something to save image');
                       }
+                      if (_createVideo) {
+                        debugPrint('creating video');
+                        await widget.renderWidget!();
+                      } else {
+                        debugPrint('creating image');
+                        final response = await takePicture(
+                          contentKey: widget.contentKey,
+                          context: context,
+                          saveToGallery: true,
+                          fileName: controlNotifier.folderName,
+                        );
+                        if (response) {
+                          toastification.show(
+                            context: context,
+                            type: ToastificationType.success,
+                            style: ToastificationStyle.flat,
+                            description: Text(
+                              widget.savedImageText ?? 'Successfully saved',
+                            ),
+                            alignment: Alignment.topCenter,
+                            autoCloseDuration: const Duration(seconds: 4),
+                            borderRadius: BorderRadius.circular(100.0),
+                          );
+                        } else {}
+                      }
+                      Navigator.of(context, rootNavigator: true).pop();
+                    } else {
+                      toastification.show(
+                        context: context,
+                        type: ToastificationType.error,
+                        style: ToastificationStyle.flat,
+                        description: Text(
+                          widget.emptyImageText ??
+                              'Design something to save image',
+                        ),
+                        alignment: Alignment.topCenter,
+                        autoCloseDuration: const Duration(seconds: 4),
+                        borderRadius: BorderRadius.circular(100.0),
+                      );
+                    }
 
-                      setState(() {
-                        _createVideo = false;
-                      });
-                    },
-                    child: const ImageIcon(
-                      AssetImage('assets/icons/download.png',
-                          package: 'vs_story_designer',),
-                      color: Colors.white,
-                      size: 20,
-                    ),),
+                    setState(() {
+                      _createVideo = false;
+                    });
+                  },
+                  child: const ImageIcon(
+                    AssetImage(
+                      'assets/icons/download.png',
+                      package: 'vs_story_designer',
+                    ),
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
               ],
             ),
           ),
@@ -223,10 +271,11 @@ class _TopToolsState extends State<TopTools> {
             height: 30,
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: controlProvider
-                      .gradientColors![controlProvider.gradientIndex],),
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: controlProvider
+                    .gradientColors![controlProvider.gradientIndex],
+              ),
               shape: BoxShape.circle,
             ),
           ),

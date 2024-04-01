@@ -28,8 +28,7 @@ dependencies:
   # positioning
   align_positioned: ^4.0.1
   #message
-  # fluttertoast: ^8.1.2
-  oktoast: ^3.4.0
+  toastification: ^1.2.1
 
   # animated_text_kit: ^4.2.2
 

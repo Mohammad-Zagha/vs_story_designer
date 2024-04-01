@@ -1,9 +1,10 @@
-## 2.2.0
+## 2.3.0
 - Bump all dependencies
 - Bump gradle
 - Add analysis options and fix all linter-warnings
-- Add initial-image for startup
-- Add alternative "done"-String for Done-Buttons
+- Add Strings for errors and done-text
+- Fix image export
+- Replace Toast because old did not work
 
 ## 2.2.0
 - Fixed Bugs

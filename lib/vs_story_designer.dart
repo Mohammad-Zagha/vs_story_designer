@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable, library_private_types_in_public_api
 library vs_story_designer;
 
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -130,6 +129,8 @@ class VSStoryDesigner extends StatefulWidget {
       this.editorBackgroundColor,
       this.galleryThumbnailQuality,
       this.doneText,
+      this.emptyImageText,
+      this.savedImageText,
       this.mediaPath,});
   /// editor custom font families
   final List<FontType>? fontFamilyList;
@@ -171,8 +172,10 @@ class VSStoryDesigner extends StatefulWidget {
   final int? galleryThumbnailQuality;
   final String centerText;
 
-  /// 'DONE'-Button-Text
+  /// Texts
   final String? doneText;
+  final String? emptyImageText;
+  final String? savedImageText;
 
   // share image file path
   final String? mediaPath;

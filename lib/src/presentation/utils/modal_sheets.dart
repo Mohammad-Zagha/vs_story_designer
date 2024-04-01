@@ -1,9 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, unused_element
 
 import 'package:flutter/material.dart';
-import 'package:oktoast/oktoast.dart';
 // import 'package:modal_gif_picker/modal_gif_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:toastification/toastification.dart';
 // import 'package:vs_story_designer/src/domain/models/editable_items.dart';
 import 'package:vs_story_designer/src/domain/providers/notifiers/control_provider.dart';
 import 'package:vs_story_designer/src/domain/providers/notifiers/draggable_widget_notifier.dart';
@@ -41,10 +41,11 @@ import 'package:vs_story_designer/vs_story_designer.dart';
 // }
 
 /// custom exit dialog
-Future<bool> exitDialog(
-    {required context,
-    required contentKey,
-    required ThemeType themeType,}) async {
+Future<bool> exitDialog({
+  required context,
+  required contentKey,
+  required ThemeType themeType,
+}) async {
   return (await showDialog(
         context: context,
         // barrierColor:
@@ -62,30 +63,33 @@ Future<bool> exitDialog(
               alignment: Alignment.center,
               height: 250,
               decoration: BoxDecoration(
-                  color: themeType == ThemeType.light
-                      ? Colors.white
-                      : HexColor.fromHex('#262626'),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                        color: themeType == ThemeType.light
-                            ? Colors.black
-                            : Colors.white10,
-                        offset: const Offset(0, 1),
-                        blurRadius: 4,),
-                  ],),
+                color: themeType == ThemeType.light
+                    ? Colors.white
+                    : HexColor.fromHex('#262626'),
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: themeType == ThemeType.light
+                        ? Colors.black
+                        : Colors.white10,
+                    offset: const Offset(0, 1),
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
                     'Discard Edits?',
                     style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w600,
-                        color: themeType == ThemeType.light
-                            ? Colors.black
-                            : Colors.white,
-                        letterSpacing: 0.5,),
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
+                      color: themeType == ThemeType.light
+                          ? Colors.black
+                          : Colors.white,
+                      letterSpacing: 0.5,
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -93,19 +97,21 @@ Future<bool> exitDialog(
                   Text(
                     "If you go back now, you'll lose all the edits you've made.",
                     style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        color: themeType == ThemeType.light
-                            ? Colors.grey
-                            : Colors.white54,
-                        letterSpacing: 0.1,),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      color: themeType == ThemeType.light
+                          ? Colors.grey
+                          : Colors.white54,
+                      letterSpacing: 0.1,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 20),
                   Divider(
-                      color: themeType == ThemeType.light
-                          ? Colors.black26
-                          : Colors.white10,),
+                    color: themeType == ThemeType.light
+                        ? Colors.black26
+                        : Colors.white10,
+                  ),
                   const SizedBox(height: 10),
 
                   /// discard
@@ -120,10 +126,11 @@ Future<bool> exitDialog(
                         Text(
                           'Discard',
                           style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.redAccent.shade200,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 0.1,),
+                            fontSize: 16,
+                            color: Colors.redAccent.shade200,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.1,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                       ],
@@ -173,9 +180,10 @@ Future<bool> exitDialog(
                   // ),
                   const SizedBox(height: 10),
                   Divider(
-                      color: themeType == ThemeType.light
-                          ? Colors.black26
-                          : Colors.white10,),
+                    color: themeType == ThemeType.light
+                        ? Colors.black26
+                        : Colors.white10,
+                  ),
                   const SizedBox(height: 10),
 
                   ///cancel
@@ -189,12 +197,13 @@ Future<bool> exitDialog(
                         Text(
                           'Cancel',
                           style: TextStyle(
-                              fontSize: 16,
-                              color: themeType == ThemeType.light
-                                  ? Colors.black
-                                  : Colors.white,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 0.5,),
+                            fontSize: 16,
+                            color: themeType == ThemeType.light
+                                ? Colors.black
+                                : Colors.white,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                       ],
@@ -227,6 +236,10 @@ void _resetDefaults({required BuildContext context}) {
 
 void _dispose({required context, required message}) {
   _resetDefaults(context: context);
-  showToast(message);
+  toastification.show(
+    context: context,
+    title: Text(message),
+    autoCloseDuration: const Duration(seconds: 5),
+  );
   Navigator.of(context).pop(true);
 }

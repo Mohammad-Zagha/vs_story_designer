@@ -1,8 +1,10 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
+import 'package:toastification/toastification.dart';
 import 'package:vs_media_picker/vs_media_picker.dart';
 import 'package:vs_story_designer/src/domain/providers/notifiers/control_provider.dart';
 import 'package:vs_story_designer/src/domain/providers/notifiers/draggable_widget_notifier.dart';
@@ -23,6 +25,7 @@ class BottomTools extends StatelessWidget {
     this.renderWidget,
     this.onDoneButtonStyle,
     this.editorBackgroundColor,
+    this.emptyImageText,
   });
   final GlobalKey contentKey;
   final Function(String imageUri) onDone;
@@ -31,6 +34,7 @@ class BottomTools extends StatelessWidget {
 
   /// editor background color
   final Color? editorBackgroundColor;
+  final String? emptyImageText;
 
   @override
   Widget build(BuildContext context) {
@@ -121,35 +125,38 @@ class BottomTools extends StatelessWidget {
               //       }),
 
               /// center logo
-              if (controlNotifier.middleBottomWidget != null) Center(
-                      child: Container(
-                        width: _size.width / 3,
-                        height: 80,
-                        alignment: Alignment.bottomCenter,
-                        child: controlNotifier.middleBottomWidget,
+              if (controlNotifier.middleBottomWidget != null)
+                Center(
+                  child: Container(
+                    width: _size.width / 3,
+                    height: 80,
+                    alignment: Alignment.bottomCenter,
+                    child: controlNotifier.middleBottomWidget,
+                  ),
+                )
+              else
+                Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        'assets/images/instagram_logo.png',
+                        package: 'vs_story_designer',
+                        color: Colors.white,
+                        height: 42,
                       ),
-                    ) else Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset(
-                            'assets/images/instagram_logo.png',
-                            package: 'vs_story_designer',
-                            color: Colors.white,
-                            height: 42,
-                          ),
-                          const Text(
-                            'Story Designer',
-                            style: TextStyle(
-                              color: Colors.white38,
-                              letterSpacing: 1.5,
-                              fontSize: 9.2,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
+                      const Text(
+                        'Story Designer',
+                        style: TextStyle(
+                          color: Colors.white38,
+                          letterSpacing: 1.5,
+                          fontSize: 9.2,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
+                    ],
+                  ),
+                ),
 
               /// save final image to gallery
 
@@ -158,23 +165,25 @@ class BottomTools extends StatelessWidget {
                   String pngUri;
                   if (paintingNotifier.lines.isNotEmpty ||
                       itemNotifier.draggableWidget.isNotEmpty) {
-                    await showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Card(
-                              color: Colors.white,
-                              child: Container(
-                                padding: const EdgeInsets.all(50),
-                                child: const CircularProgressIndicator(),
+                    unawaited(
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Card(
+                                color: Colors.white,
+                                child: Container(
+                                  padding: const EdgeInsets.all(50),
+                                  child: const CircularProgressIndicator(),
+                                ),
                               ),
-                            ),
-                          ],
-                        );
-                      },
+                            ],
+                          );
+                        },
+                      ),
                     );
 
                     for (final element in itemNotifier.draggableWidget) {
@@ -207,7 +216,17 @@ class BottomTools extends StatelessWidget {
                       });
                     }
                   } else {
-                    showToast('Design something to save image');
+                    toastification.show(
+                      context: context,
+                      type: ToastificationType.error,
+                      style: ToastificationStyle.flat,
+                      description: Text(
+                        emptyImageText ?? 'Design something to save image',
+                      ),
+                      alignment: Alignment.topCenter,
+                      autoCloseDuration: const Duration(seconds: 4),
+                      borderRadius: BorderRadius.circular(100.0),
+                    );
                   }
                   // setState(() {
                   _createVideo = false;

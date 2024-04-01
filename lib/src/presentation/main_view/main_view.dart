@@ -55,6 +55,8 @@ class MainView extends StatefulWidget {
     this.galleryThumbnailQuality,
     this.centerText,
     this.doneText,
+    this.emptyImageText,
+    this.savedImageText,
     this.mediaPath,
   });
 
@@ -99,8 +101,10 @@ class MainView extends StatefulWidget {
 // theme type
   final ThemeType? themeType;
 
-// Done-Text
+// Texts
   final String? doneText;
+  final String? emptyImageText;
+  final String? savedImageText;
 
 // share image file path
   final String? mediaPath;
@@ -128,7 +132,8 @@ class _MainViewState extends State<MainView> {
 
   /// screen size
   final _screenSize = MediaQueryData.fromView(
-      WidgetsBinding.instance.platformDispatcher.views.single,);
+    WidgetsBinding.instance.platformDispatcher.views.single,
+  );
 
   /// recorder controller
   // final WidgetRecorderController _recorderController =
@@ -401,6 +406,8 @@ class _MainViewState extends State<MainView> {
                             child: TopTools(
                               contentKey: contentKey,
                               context: context,
+                              savedImageText: widget.savedImageText,
+                              emptyImageText: widget.emptyImageText,
                               // renderWidget: () => startRecording(
                               //     controlNotifier: controlNotifier,
                               //     renderingNotifier: renderingNotifier,
@@ -422,6 +429,7 @@ class _MainViewState extends State<MainView> {
                             alignment: Alignment.bottomCenter,
                             child: BottomTools(
                               contentKey: contentKey,
+                              emptyImageText: widget.emptyImageText,
                               // renderWidget: () => startRecording(
                               //     controlNotifier: controlNotifier,
                               //     renderingNotifier: renderingNotifier,
@@ -449,7 +457,9 @@ class _MainViewState extends State<MainView> {
                         /// show painting sketch
                         Visibility(
                           visible: controlNotifier.isPainting,
-                          child: Painting(doneText: widget.doneText ?? 'Done',),
+                          child: Painting(
+                            doneText: widget.doneText ?? 'Done',
+                          ),
                         ),
                       ],
                     ),
