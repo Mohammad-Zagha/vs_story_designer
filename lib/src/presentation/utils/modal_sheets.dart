@@ -44,7 +44,7 @@ import 'package:vs_story_designer/vs_story_designer.dart';
 Future<bool> exitDialog(
     {required context,
     required contentKey,
-    required ThemeType themeType}) async {
+    required ThemeType themeType,}) async {
   return (await showDialog(
         context: context,
         // barrierColor:
@@ -62,7 +62,6 @@ Future<bool> exitDialog(
               alignment: Alignment.center,
               height: 250,
               decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
                   color: themeType == ThemeType.light
                       ? Colors.white
                       : HexColor.fromHex('#262626'),
@@ -73,8 +72,8 @@ Future<bool> exitDialog(
                             ? Colors.black
                             : Colors.white10,
                         offset: const Offset(0, 1),
-                        blurRadius: 4),
-                  ]),
+                        blurRadius: 4,),
+                  ],),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
@@ -86,7 +85,7 @@ Future<bool> exitDialog(
                         color: themeType == ThemeType.light
                             ? Colors.black
                             : Colors.white,
-                        letterSpacing: 0.5),
+                        letterSpacing: 0.5,),
                   ),
                   const SizedBox(
                     height: 20,
@@ -99,14 +98,14 @@ Future<bool> exitDialog(
                         color: themeType == ThemeType.light
                             ? Colors.grey
                             : Colors.white54,
-                        letterSpacing: 0.1),
+                        letterSpacing: 0.1,),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 20),
                   Divider(
                       color: themeType == ThemeType.light
                           ? Colors.black26
-                          : Colors.white10),
+                          : Colors.white10,),
                   const SizedBox(height: 10),
 
                   /// discard
@@ -124,7 +123,7 @@ Future<bool> exitDialog(
                               fontSize: 16,
                               color: Colors.redAccent.shade200,
                               fontWeight: FontWeight.bold,
-                              letterSpacing: 0.1),
+                              letterSpacing: 0.1,),
                           textAlign: TextAlign.center,
                         ),
                       ],
@@ -176,7 +175,7 @@ Future<bool> exitDialog(
                   Divider(
                       color: themeType == ThemeType.light
                           ? Colors.black26
-                          : Colors.white10),
+                          : Colors.white10,),
                   const SizedBox(height: 10),
 
                   ///cancel
@@ -195,7 +194,7 @@ Future<bool> exitDialog(
                                   ? Colors.black
                                   : Colors.white,
                               fontWeight: FontWeight.bold,
-                              letterSpacing: 0.5),
+                              letterSpacing: 0.5,),
                           textAlign: TextAlign.center,
                         ),
                       ],
@@ -210,7 +209,7 @@ Future<bool> exitDialog(
       false;
 }
 
-_resetDefaults({required BuildContext context}) {
+void _resetDefaults({required BuildContext context}) {
   final _paintingProvider =
       Provider.of<PaintingNotifier>(context, listen: false);
   final _widgetProvider =
@@ -226,7 +225,7 @@ _resetDefaults({required BuildContext context}) {
   _controlProvider.mediaPath = '';
 }
 
-_dispose({required context, required message}) {
+void _dispose({required context, required message}) {
   _resetDefaults(context: context);
   showToast(message);
   Navigator.of(context).pop(true);

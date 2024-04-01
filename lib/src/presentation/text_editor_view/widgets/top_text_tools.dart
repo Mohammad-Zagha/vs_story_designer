@@ -4,8 +4,9 @@ import 'package:vs_story_designer/src/domain/providers/notifiers/text_editing_no
 import 'package:vs_story_designer/src/presentation/widgets/tool_button.dart';
 
 class TopTextTools extends StatelessWidget {
+  const TopTextTools({required this.onDone, required this.doneText, super.key});
   final void Function() onDone;
-  const TopTextTools({super.key, required this.onDone});
+  final String doneText;
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +24,15 @@ class TopTextTools extends StatelessWidget {
                   ToolButton(
                     borderHide: !editorNotifier.isFontFamily ? false : true,
                     onTap: () {
-                      editorNotifier.isFontFamily =
-                          !editorNotifier.isFontFamily;
-                      editorNotifier.isTextAnimation = false;
+                      editorNotifier..isFontFamily =
+                          !editorNotifier.isFontFamily
+                      ..isTextAnimation = false;
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         if (editorNotifier.fontFamilyController.hasClients) {
                           editorNotifier.fontFamilyController.animateToPage(
                               editorNotifier.fontFamilyIndex,
                               duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeIn);
+                              curve: Curves.easeIn,);
                         }
                       });
                     },
@@ -40,14 +41,14 @@ class TopTextTools extends StatelessWidget {
                         child: !editorNotifier.isFontFamily
                             ? const ImageIcon(
                                 AssetImage('assets/icons/text.png',
-                                    package: 'vs_story_designer'),
+                                    package: 'vs_story_designer',),
                                 size: 20,
                                 color: Colors.white,
                               )
                             : Image.asset(
                                 'assets/icons/circular_gradient.png',
                                 package: 'vs_story_designer',
-                              )),
+                              ),),
                   ),
 
                   /// text align
@@ -62,7 +63,7 @@ class TopTextTools extends StatelessWidget {
                                   ? Icons.format_align_right
                                   : Icons.format_align_left,
                           color: Colors.white,
-                        )),
+                        ),),
                   ),
 
                   /// background color
@@ -79,13 +80,13 @@ class TopTextTools extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 5, bottom: 3),
                           child: ImageIcon(
                             const AssetImage('assets/icons/font_backGround.png',
-                                package: 'vs_story_designer'),
+                                package: 'vs_story_designer',),
                             color: editorNotifier.backGroundColor !=
                                     Colors.transparent
                                 ? Colors.black
                                 : Colors.white,
                           ),
-                        ))),
+                        ),),),
                     //////////////////////////
                   ),
                   // ToolButton(
@@ -141,14 +142,14 @@ class TopTextTools extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 10, top: 10),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 6, horizontal: 12),
+                          vertical: 6, horizontal: 12,),
                       decoration: BoxDecoration(
                           color: Colors.black12,
                           border: Border.all(color: Colors.white, width: 1.5),
-                          borderRadius: BorderRadius.circular(15)),
-                      child: const Text(
-                        'Done',
-                        style: TextStyle(
+                          borderRadius: BorderRadius.circular(15),),
+                      child: Text(
+                        doneText,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 15,
                           fontWeight: FontWeight.w500,

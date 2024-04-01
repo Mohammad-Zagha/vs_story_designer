@@ -79,12 +79,12 @@ class PaintingNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  clearAll() {
+  void clearAll() {
     _lines = [];
     notifyListeners();
   }
 
-  removeLast() {
+  void removeLast() {
     if (_lines.isNotEmpty) {
       _lines.removeLast();
       notifyListeners();
@@ -94,14 +94,14 @@ class PaintingNotifier extends ChangeNotifier {
     }
   }
 
-  resetDefaults() {
+  void resetDefaults() {
     _lineWidth = 10;
     _lineColor = 0;
     _paintingType = PaintingType.pen;
     notifyListeners();
   }
 
-  closeConnection() {
+  void closeConnection() {
     _currentLineStreamController.close();
     _linesStreamController.close();
   }

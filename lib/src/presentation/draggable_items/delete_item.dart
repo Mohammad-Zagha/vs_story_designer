@@ -6,10 +6,7 @@ import 'package:vs_story_designer/src/presentation/utils/constants/item_type.dar
 
 class DeleteItem extends StatelessWidget {
   const DeleteItem({
-    super.key,
-    required EditableItem? activeItem,
-    required this.isDeletePosition,
-    required this.animationsDuration,
+    required EditableItem? activeItem, required this.isDeletePosition, required this.animationsDuration, super.key,
   }) : _activeItem = activeItem;
 
   final EditableItem? _activeItem;
@@ -18,7 +15,7 @@ class DeleteItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _mediaQuery = MediaQuery.of(context);
+    final _mediaQuery = MediaQuery.of(context);
 
     return Visibility(
       visible: _activeItem != null && _activeItem!.type != ItemType.image,
@@ -39,13 +36,13 @@ class DeleteItem extends StatelessWidget {
                 ),
                 child: const ImageIcon(
                   AssetImage('assets/icons/trash.png',
-                      package: 'vs_story_designer'),
+                      package: 'vs_story_designer',),
                   color: Colors.white,
                   size: 23,
                 ),
               ),
             ),
-          )),
+          ),),
     );
   }
 }

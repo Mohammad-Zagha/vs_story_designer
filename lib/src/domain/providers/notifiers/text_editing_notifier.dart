@@ -23,14 +23,14 @@ class TextEditingNotifier extends ChangeNotifier {
   final List<Color> _textColorBackGround = [
     Colors.transparent,
     Colors.black,
-    Colors.white
+    Colors.white,
   ];
 
   int _currentAlign = 0;
   final List<TextAlign> _texAlignment = [
     TextAlign.center,
     TextAlign.right,
-    TextAlign.left
+    TextAlign.left,
   ];
 
   int _currentAnimation = 0;
@@ -42,7 +42,7 @@ class TextEditingNotifier extends ChangeNotifier {
     TextAnimationType.scale,
     //TextAnimationType.colorize,
     TextAnimationType.wavy,
-    TextAnimationType.flicker
+    TextAnimationType.flicker,
   ];
 
   String get text => _text;
@@ -138,7 +138,7 @@ class TextEditingNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  onBackGroundChange() {
+  void onBackGroundChange() {
     if (_currentColorBackground < _textColorBackGround.length - 1) {
       _currentColorBackground += 1;
       _backGroundColor = _textColorBackGround[_currentColorBackground];
@@ -150,7 +150,7 @@ class TextEditingNotifier extends ChangeNotifier {
     }
   }
 
-  onAlignmentChange() {
+  void onAlignmentChange() {
     if (_currentAlign < _texAlignment.length - 1) {
       _currentAlign += 1;
       _textAlign = _texAlignment[_currentAlign];
@@ -162,7 +162,7 @@ class TextEditingNotifier extends ChangeNotifier {
     }
   }
 
-  onAnimationChange() {
+  void onAnimationChange() {
     if (_currentAnimation < animationList.length - 1) {
       _currentAnimation += 1;
       _animationType = animationList[_currentAnimation];
@@ -174,7 +174,7 @@ class TextEditingNotifier extends ChangeNotifier {
     }
   }
 
-  setDefaults() {
+  void setDefaults() {
     _text = '';
     _textController.text = '';
     _textColor = 0;
@@ -191,7 +191,7 @@ class TextEditingNotifier extends ChangeNotifier {
     _animationType = TextAnimationType.none;
   }
 
-  disposeController() {
+  void disposeController() {
     _textController.dispose();
     _fontFamilyController.dispose();
     _textAnimationController.dispose();

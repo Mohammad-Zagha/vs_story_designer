@@ -5,18 +5,13 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class ScrollablePageView extends StatefulWidget {
+  ScrollablePageView(
+      {required this.mainView, required this.gallery, required this.scrollPhysics, required this.pageController, required this.gridController, super.key,});
   Widget mainView;
   Widget gallery;
   final bool scrollPhysics;
   PageController pageController;
   ScrollController gridController;
-  ScrollablePageView(
-      {super.key,
-      required this.mainView,
-      required this.gallery,
-      required this.scrollPhysics,
-      required this.pageController,
-      required this.gridController});
   @override
   _ScrollablePageViewState createState() => _ScrollablePageViewState();
 }
@@ -68,8 +63,8 @@ class _ScrollablePageViewState extends State<ScrollablePageView> {
       _drag = _pageController!.position.drag(
           DragStartDetails(
               globalPosition: details.globalPosition,
-              localPosition: details.localPosition),
-          _disposeDrag);
+              localPosition: details.localPosition,),
+          _disposeDrag,);
     }
     _drag?.update(details);
   }
@@ -108,7 +103,7 @@ class _ScrollablePageViewState extends State<ScrollablePageView> {
                 ..onEnd = null
                 ..onCancel = null;
             }
-          })
+          }),
         },
         behavior: HitTestBehavior.opaque,
         child: PageView(
@@ -116,6 +111,6 @@ class _ScrollablePageViewState extends State<ScrollablePageView> {
           scrollDirection: Axis.vertical,
           physics: const NeverScrollableScrollPhysics(),
           children: [widget.mainView, widget.gallery],
-        ));
+        ),);
   }
 }

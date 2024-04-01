@@ -20,6 +20,8 @@
 //   'UnifrakturMaguntia'
 // ];
 
+// ignore_for_file: no_default_cases
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vs_story_designer/vs_story_designer.dart';

@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:vs_story_designer/src/presentation/widgets/animated_onTap_button.dart';
 
 class ToolButton extends StatelessWidget {
+  const ToolButton(
+      {required this.onTap,
+      required this.child, super.key,
+      this.backGroundColor,
+      this.padding,
+      this.onLongPress,
+      this.colorBorder = Colors.white,
+      this.borderHide = false,});
   final Function() onTap;
   final Widget child;
   final Color? backGroundColor;
@@ -9,15 +17,6 @@ class ToolButton extends StatelessWidget {
   final Function()? onLongPress;
   final Color colorBorder;
   final bool? borderHide;
-  const ToolButton(
-      {super.key,
-      required this.onTap,
-      required this.child,
-      this.backGroundColor,
-      this.padding,
-      this.onLongPress,
-      this.colorBorder = Colors.white,
-      this.borderHide = false});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +41,7 @@ class ToolButton extends StatelessWidget {
                       color: backGroundColor ?? Colors.transparent,
                       // shape: BoxShape.circle,
                       borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: Colors.white, width: 0.5)),
+                      border: Border.all(color: Colors.white, width: 0.5),),
               child: Transform.scale(
                 scale: 0.8,
                 child: child,

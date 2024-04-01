@@ -18,7 +18,7 @@ class _SizeSliderWidgetState extends State<SizeSliderWidget> {
   bool _showIndicator = false;
   @override
   Widget build(BuildContext context) {
-    var _size = MediaQuery.of(context).size;
+    final _size = MediaQuery.of(context).size;
 
     /// change consumer to class parameter and use this widget for text_size and fingerPaint_size
     return Consumer3<TextEditingNotifier, ControlNotifier, PaintingNotifier>(
@@ -34,8 +34,8 @@ class _SizeSliderWidgetState extends State<SizeSliderWidget> {
                 height: 300,
                 child: CustomPaint(
                   painter: RPSCustomPainter(),
-                  size: Size(_size.height, (_size.width).toDouble()),
-                )),
+                  size: Size(_size.height, _size.width.toDouble()),
+                ),),
 
             /// slider decoration with animations
             AnimatedContainer(
@@ -57,7 +57,7 @@ class _SizeSliderWidgetState extends State<SizeSliderWidget> {
                           color: !_showIndicator
                               ? Colors.white.withOpacity(0.2)
                               : Colors.transparent,
-                          borderRadius: BorderRadius.circular(30)),
+                          borderRadius: BorderRadius.circular(30),),
                     ),
                     Padding(
                       padding: _isChange
@@ -108,17 +108,16 @@ class _SizeSliderWidgetState extends State<SizeSliderWidget> {
 class RPSCustomPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint0 = Paint()
+    final Paint paint0 = Paint()
       ..color = Colors.white.withOpacity(0.2)
       ..style = PaintingStyle.fill
       ..strokeWidth = 1.0;
 
-    Path path0 = Path();
-    path0.moveTo(size.width * 0.0980139, size.height * 0.0651296);
-    path0.lineTo(size.width * 0.9040833, size.height * 0.0646574);
-    path0.lineTo(size.width * 0.5000139, size.height * 0.9537037);
-    path0.lineTo(size.width * 0.0980139, size.height * 0.0651296);
-    path0.close();
+    final Path path0 = Path()..moveTo(size.width * 0.0980139, size.height * 0.0651296)
+    ..lineTo(size.width * 0.9040833, size.height * 0.0646574)
+    ..lineTo(size.width * 0.5000139, size.height * 0.9537037)
+    ..lineTo(size.width * 0.0980139, size.height * 0.0651296)
+    ..close();
 
     canvas.drawPath(path0, paint0);
   }

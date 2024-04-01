@@ -1,4 +1,4 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: no_leading_underscores_for_local_identifiers, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
@@ -16,6 +16,14 @@ import 'package:vs_story_designer/src/presentation/widgets/animated_onTap_button
 // import 'package:vs_story_designer/src/presentation/widgets/tool_button.dart';
 
 class BottomTools extends StatelessWidget {
+  const BottomTools({
+    required this.contentKey,
+    required this.onDone,
+    super.key,
+    this.renderWidget,
+    this.onDoneButtonStyle,
+    this.editorBackgroundColor,
+  });
   final GlobalKey contentKey;
   final Function(String imageUri) onDone;
   final Widget? onDoneButtonStyle;
@@ -23,27 +31,25 @@ class BottomTools extends StatelessWidget {
 
   /// editor background color
   final Color? editorBackgroundColor;
-  const BottomTools(
-      {super.key,
-      required this.contentKey,
-      required this.onDone,
-      this.renderWidget,
-      this.onDoneButtonStyle,
-      this.editorBackgroundColor});
 
   @override
   Widget build(BuildContext context) {
-    var _size = MediaQuery.of(context).size;
+    final _size = MediaQuery.of(context).size;
     bool _createVideo = false;
     return Consumer4<ControlNotifier, ScrollNotifier, DraggableWidgetNotifier,
         PaintingNotifier>(
-      builder: (_, controlNotifier, scrollNotifier, itemNotifier,
-          paintingNotifier, __) {
+      builder: (
+        _,
+        controlNotifier,
+        scrollNotifier,
+        itemNotifier,
+        paintingNotifier,
+        __,
+      ) {
         return Container(
           height: 95,
           decoration: const BoxDecoration(color: Colors.transparent),
           child: Row(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               /// preview gallery
@@ -62,16 +68,18 @@ class BottomTools extends StatelessWidget {
                               onTap: () {
                                 /// scroll to gridView page
                                 if (controlNotifier.mediaPath.isEmpty) {
-                                  scrollNotifier.pageController.animateToPage(1,
-                                      duration:
-                                          const Duration(milliseconds: 300),
-                                      curve: Curves.ease);
+                                  scrollNotifier.pageController.animateToPage(
+                                    1,
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.ease,
+                                  );
                                 }
                               },
                               child: const CoverThumbnail(
                                 thumbnailQuality: 150,
                               ),
-                            ))
+                            ),
+                          )
 
                         /// return clear [imagePath] provider
                         : GestureDetector(
@@ -113,15 +121,14 @@ class BottomTools extends StatelessWidget {
               //       }),
 
               /// center logo
-              controlNotifier.middleBottomWidget != null
-                  ? Center(
+              if (controlNotifier.middleBottomWidget != null) Center(
                       child: Container(
-                          width: _size.width / 3,
-                          height: 80,
-                          alignment: Alignment.bottomCenter,
-                          child: controlNotifier.middleBottomWidget),
-                    )
-                  : Center(
+                        width: _size.width / 3,
+                        height: 80,
+                        alignment: Alignment.bottomCenter,
+                        child: controlNotifier.middleBottomWidget,
+                      ),
+                    ) else Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -134,10 +141,11 @@ class BottomTools extends StatelessWidget {
                           const Text(
                             'Story Designer',
                             style: TextStyle(
-                                color: Colors.white38,
-                                letterSpacing: 1.5,
-                                fontSize: 9.2,
-                                fontWeight: FontWeight.bold),
+                              color: Colors.white38,
+                              letterSpacing: 1.5,
+                              fontSize: 9.2,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),
@@ -146,80 +154,84 @@ class BottomTools extends StatelessWidget {
               /// save final image to gallery
 
               AnimatedOnTapButton(
-                  onTap: () async {
-                    String pngUri;
-                    if (paintingNotifier.lines.isNotEmpty ||
-                        itemNotifier.draggableWidget.isNotEmpty) {
-                      showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context) {
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Card(
-                                    color: Colors.white,
-                                    child: Container(
-                                        padding: const EdgeInsets.all(50),
-                                        child:
-                                            const CircularProgressIndicator())),
-                              ],
-                            );
-                          });
-
-                      for (var element in itemNotifier.draggableWidget) {
-                        if (element.type == ItemType.gif ||
-                            element.animationType != TextAnimationType.none) {
-                          // setState(() {
-                          _createVideo = true;
-                          // });
-                        }
-                      }
-                      if (_createVideo) {
-                        debugPrint('creating video');
-                        await renderWidget!();
-                      } else {
-                        debugPrint('creating image');
-                        await takePicture(
-                                contentKey: contentKey,
-                                context: context,
-                                saveToGallery: false,
-                                fileName: controlNotifier.folderName)
-                            .then((bytes) {
-                          Navigator.of(context, rootNavigator: true).pop();
-                          if (bytes != null) {
-                            pngUri = bytes;
-                            onDone(pngUri);
-                          } else {
-                            // ignore: avoid_print
-                            print("error");
-                          }
-                        });
-                      }
-                    } else {
-                      showToast('Design something to save image');
-                    }
-                    // setState(() {
-                    _createVideo = false;
-                    // });
-                  },
-                  child: onDoneButtonStyle ??
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            border:
-                                Border.all(color: Colors.white, width: 1.5)),
-                        child: const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: 0, right: 2),
-                                child: Icon(Icons.share_sharp, size: 28),
+                onTap: () async {
+                  String pngUri;
+                  if (paintingNotifier.lines.isNotEmpty ||
+                      itemNotifier.draggableWidget.isNotEmpty) {
+                    await showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Card(
+                              color: Colors.white,
+                              child: Container(
+                                padding: const EdgeInsets.all(50),
+                                child: const CircularProgressIndicator(),
                               ),
-                            ]),
-                      ))
+                            ),
+                          ],
+                        );
+                      },
+                    );
+
+                    for (final element in itemNotifier.draggableWidget) {
+                      if (element.type == ItemType.gif ||
+                          element.animationType != TextAnimationType.none) {
+                        // setState(() {
+                        _createVideo = true;
+                        // });
+                      }
+                    }
+                    if (_createVideo) {
+                      debugPrint('creating video');
+                      await renderWidget!();
+                    } else {
+                      debugPrint('creating image');
+                      await takePicture(
+                        contentKey: contentKey,
+                        context: context,
+                        saveToGallery: false,
+                        fileName: controlNotifier.folderName,
+                      ).then((bytes) {
+                        Navigator.of(context, rootNavigator: true).pop();
+                        if (bytes != null) {
+                          pngUri = bytes;
+                          onDone(pngUri);
+                        } else {
+                          // ignore: avoid_print
+                          print('error');
+                        }
+                      });
+                    }
+                  } else {
+                    showToast('Design something to save image');
+                  }
+                  // setState(() {
+                  _createVideo = false;
+                  // });
+                },
+                child: onDoneButtonStyle ??
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.white, width: 1.5),
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(right: 2),
+                            child: Icon(Icons.share_sharp, size: 28),
+                          ),
+                        ],
+                      ),
+                    ),
+              ),
 
               // Padding(
               //   padding: const EdgeInsets.only(right: 10),
@@ -248,8 +260,9 @@ class BottomTools extends StatelessWidget {
       height: 45,
       width: 45,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(width: 1.4, color: Colors.white)),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(width: 1.4, color: Colors.white),
+      ),
       child: child,
     );
   }

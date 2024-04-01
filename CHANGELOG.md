@@ -1,4 +1,11 @@
 ## 2.2.0
+- Bump all dependencies
+- Bump gradle
+- Add analysis options and fix all linter-warnings
+- Add initial-image for startup
+- Add alternative "done"-String for Done-Buttons
+
+## 2.2.0
 - Fixed Bugs
 - Upgraded SDK version support to 4.0.0
 - updated supporting packages

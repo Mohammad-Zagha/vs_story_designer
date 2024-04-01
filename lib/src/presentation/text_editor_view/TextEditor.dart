@@ -15,8 +15,9 @@ import 'package:vs_story_designer/src/presentation/widgets/color_selector.dart';
 import 'package:vs_story_designer/src/presentation/widgets/size_slider_selector.dart';
 
 class TextEditor extends StatefulWidget {
+  const TextEditor({required this.context, required this.doneText, super.key});
   final BuildContext context;
-  const TextEditor({super.key, required this.context});
+  final String doneText;
 
   @override
   State<TextEditor> createState() => _TextEditorState();
@@ -40,7 +41,7 @@ class _TextEditorState extends State<TextEditor> {
 
   @override
   Widget build(BuildContext context) {
-    var _size = MediaQuery.of(context).size;
+    final _size = MediaQuery.of(context).size;
     return Material(
         color: Colors.transparent,
         child: Consumer2<ControlNotifier, TextEditingNotifier>(
@@ -59,7 +60,6 @@ class _TextEditorState extends State<TextEditor> {
                       children: [
                         /// text field
                         const Align(
-                          alignment: Alignment.center,
                           child: TextFieldWidget(),
                         ),
 
@@ -75,8 +75,9 @@ class _TextEditorState extends State<TextEditor> {
                               alignment: Alignment.topCenter,
                               child: TopTextTools(
                                 onDone: () => _onTap(
-                                    context, controlNotifier, editorNotifier),
-                              )),
+                                    context, controlNotifier, editorNotifier,),
+                                    doneText: widget.doneText,
+                              ),),
                         ),
 
                         /// font family selector (bottom)
@@ -102,7 +103,7 @@ class _TextEditorState extends State<TextEditor> {
                                 padding: EdgeInsets.only(bottom: 20),
                                 child: ColorSelector(),
                               ),
-                            )),
+                            ),),
 
                         // font animation selector (bottom
                         // Visibility(
@@ -115,15 +116,15 @@ class _TextEditorState extends State<TextEditor> {
                         //       ),
                         //     )),
                       ],
-                    )),
+                    ),),
               ),
             );
           },
-        ));
+        ),);
   }
 
   void _onTap(context, ControlNotifier controlNotifier,
-      TextEditingNotifier editorNotifier) {
+      TextEditingNotifier editorNotifier,) {
     final _editableItemNotifier =
         Provider.of<DraggableWidgetNotifier>(context, listen: false);
 
@@ -156,7 +157,7 @@ class _TextEditorState extends State<TextEditor> {
         ..textList = editorNotifier.textList
         ..animationType =
             editorNotifier.animationList[editorNotifier.fontAnimationIndex]
-        ..position = const Offset(0.0, 0.0));
+        ..position = const Offset(0.0, 0.0),);
       editorNotifier.setDefaults();
       controlNotifier.isTextEditing = !controlNotifier.isTextEditing;
     } else {

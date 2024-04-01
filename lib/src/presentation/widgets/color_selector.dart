@@ -12,7 +12,7 @@ class ColorSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _size = MediaQuery.of(context).size;
+    final _size = MediaQuery.of(context).size;
     return Consumer3<ControlNotifier, TextEditingNotifier, PaintingNotifier>(
       builder:
           (context, controlProvider, editorProvider, paintingProvider, child) {
@@ -34,10 +34,10 @@ class ColorSelector extends StatelessWidget {
                         ? controlProvider.colorList![paintingProvider.lineColor]
                         : controlProvider.colorList![editorProvider.textColor],
                     shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 1.5)),
+                    border: Border.all(color: Colors.white, width: 1.5),),
                 child: ImageIcon(
                   const AssetImage('assets/icons/pickColor.png',
-                      package: 'vs_story_designer'),
+                      package: 'vs_story_designer',),
                   color: controlProvider.isPainting
                       ? (paintingProvider.lineColor == 0
                           ? Colors.black
@@ -73,12 +73,12 @@ class ColorSelector extends StatelessWidget {
                             color: controlProvider.colorList![index],
                             shape: BoxShape.circle,
                             border:
-                                Border.all(color: Colors.white, width: 1.5)),
+                                Border.all(color: Colors.white, width: 1.5),),
                       ),
                     );
                   },
                 ),
-              )
+              ),
             ],
           ),
         );

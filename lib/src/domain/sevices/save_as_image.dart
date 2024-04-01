@@ -10,26 +10,26 @@ Future takePicture(
     {required contentKey,
     required BuildContext context,
     required saveToGallery,
-    required fileName}) async {
+    required fileName,}) async {
   try {
     /// converter widget to image
-    RenderRepaintBoundary boundary =
+    final RenderRepaintBoundary boundary =
         contentKey.currentContext.findRenderObject();
 
-    ui.Image image = await boundary.toImage(pixelRatio: 3);
+    final ui.Image image = await boundary.toImage(pixelRatio: 3);
 
-    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    Uint8List pngBytes = byteData!.buffer.asUint8List();
+    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final Uint8List pngBytes = byteData!.buffer.asUint8List();
 
     /// create file
     final String dir = (await getApplicationDocumentsDirectory()).path;
-    String imagePath = '$dir/${fileName}_${DateTime.now()}.png';
-    File capturedFile = File(imagePath);
+    final String imagePath = '$dir/${fileName}_${DateTime.now()}.png';
+    final File capturedFile = File(imagePath);
     await capturedFile.writeAsBytes(pngBytes);
 
     if (saveToGallery) {
       final result = await ImageGallerySaver.saveImage(pngBytes,
-          quality: 100, name: "${fileName}_${DateTime.now()}.png");
+          quality: 100, name: '${fileName}_${DateTime.now()}.png',);
       if (result != null) {
         return true;
       } else {

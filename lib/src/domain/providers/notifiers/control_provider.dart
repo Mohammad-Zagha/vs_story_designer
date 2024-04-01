@@ -23,14 +23,14 @@ class ControlNotifier extends ChangeNotifier {
   }
 
   // theme type
-  ThemeType? _themeType;
+  late ThemeType? _themeType;
   ThemeType get themeType => _themeType!;
   set themeType(ThemeType key) {
     _themeType = key;
     notifyListeners();
   }
 
-  String _folderName = "";
+  String _folderName = '';
 
   int _gradientIndex = Random().nextInt(50);
 

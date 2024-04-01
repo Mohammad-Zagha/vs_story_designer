@@ -1,6 +1,8 @@
 // ignore_for_file: must_be_immutable, library_private_types_in_public_api
 library vs_story_designer;
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -112,6 +114,24 @@ enum FontType {
 }
 
 class VSStoryDesigner extends StatefulWidget {
+
+  const VSStoryDesigner(
+      {required this.onDone, required this.centerText, super.key,
+      this.initialImage,
+      this.giphyKey,
+      this.themeType,
+      this.middleBottomWidget,
+      this.colorList,
+      this.gradientColors,
+      this.fileName,
+      this.fontFamilyList,
+      this.isCustomFontList,
+      this.onBackPress,
+      this.onDoneButtonStyle,
+      this.editorBackgroundColor,
+      this.galleryThumbnailQuality,
+      this.doneText,
+      this.mediaPath,});
   /// editor custom font families
   final List<FontType>? fontFamilyList;
 
@@ -123,6 +143,9 @@ class VSStoryDesigner extends StatefulWidget {
 
   /// you can pass a fileName with which image name will be created
   final String? fileName;
+
+  /// initial image
+  final File? initialImage;
 
   /// giphy api key
   final String? giphyKey;
@@ -152,26 +175,11 @@ class VSStoryDesigner extends StatefulWidget {
   final int? galleryThumbnailQuality;
   final String centerText;
 
+  /// 'DONE'-Button-Text
+  final String? doneText;
+
   // share image file path
   final String? mediaPath;
-
-  const VSStoryDesigner(
-      {super.key,
-      this.giphyKey,
-      this.themeType,
-      required this.onDone,
-      this.middleBottomWidget,
-      this.colorList,
-      this.gradientColors,
-      this.fileName,
-      this.fontFamilyList,
-      this.isCustomFontList,
-      this.onBackPress,
-      this.onDoneButtonStyle,
-      this.editorBackgroundColor,
-      this.galleryThumbnailQuality,
-      this.mediaPath,
-      required this.centerText});
 
   @override
   _VSStoryDesignerState createState() => _VSStoryDesignerState();
@@ -183,10 +191,10 @@ class _VSStoryDesignerState extends State<VSStoryDesigner> {
     // Paint.enableDithering = true;
     WidgetsFlutterBinding.ensureInitialized();
     SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],);
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-    ));
+    ),);
     super.initState();
   }
 

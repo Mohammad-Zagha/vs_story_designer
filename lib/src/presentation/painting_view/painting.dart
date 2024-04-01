@@ -15,7 +15,8 @@ import 'package:vs_story_designer/src/presentation/widgets/color_selector.dart';
 import 'package:vs_story_designer/src/presentation/widgets/size_slider_selector.dart';
 
 class Painting extends StatefulWidget {
-  const Painting({super.key});
+  const Painting({required this.doneText, super.key});
+  final String doneText;
 
   @override
   State<Painting> createState() => _PaintingState();
@@ -45,11 +46,11 @@ class _PaintingState extends State<Painting> {
     PaintingModel? line;
 
     /// screen size
-    var screenSize = MediaQueryData.fromView(WidgetsBinding.instance.window);
+    final screenSize = MediaQueryData.fromView(WidgetsBinding.instance.platformDispatcher.views.single);
 
     /// on gestures start
     void _onPanStart(DragStartDetails details,
-        PaintingNotifier paintingNotifier, ControlNotifier controlProvider) {
+        PaintingNotifier paintingNotifier, ControlNotifier controlProvider,) {
       final box = context.findRenderObject() as RenderBox;
       final offset = box.globalToLocal(details.globalPosition);
       final point = PointVector(offset.dx, offset.dy);
@@ -70,13 +71,13 @@ class _PaintingState extends State<Painting> {
             controlProvider.colorList![paintingNotifier.lineColor],
             1,
             true,
-            paintingNotifier.paintingType);
+            paintingNotifier.paintingType,);
       }
     }
 
     /// on gestures update
     void _onPanUpdate(DragUpdateDetails details,
-        PaintingNotifier paintingNotifier, ControlNotifier controlNotifier) {
+        PaintingNotifier paintingNotifier, ControlNotifier controlNotifier,) {
       final box = context.findRenderObject() as RenderBox;
       final offset = box.globalToLocal(details.globalPosition);
       final point = PointVector(offset.dx, offset.dy);
@@ -97,7 +98,7 @@ class _PaintingState extends State<Painting> {
             controlNotifier.colorList![paintingNotifier.lineColor],
             1,
             true,
-            paintingNotifier.paintingType);
+            paintingNotifier.paintingType,);
         paintingNotifier.currentLineStreamController.add(line!);
       }
     }
@@ -111,7 +112,7 @@ class _PaintingState extends State<Painting> {
 
     /// paint current line
     Widget _renderCurrentLine(BuildContext context,
-        PaintingNotifier paintingNotifier, ControlNotifier controlNotifier) {
+        PaintingNotifier paintingNotifier, ControlNotifier controlNotifier,) {
       return GestureDetector(
         onPanStart: (details) {
           _onPanStart(details, paintingNotifier, controlNotifier);
@@ -144,7 +145,7 @@ class _PaintingState extends State<Painting> {
                             lines: line == null ? [] : [line!],
                           ),
                         );
-                      })),
+                      },),),
             ),
           ),
         ),
@@ -179,7 +180,7 @@ class _PaintingState extends State<Painting> {
                 ),
 
                 /// top painting tools
-                const SafeArea(child: TopPaintingTools()),
+                SafeArea(child: TopPaintingTools(doneText: widget.doneText,)),
 
                 /// color picker
                 const Align(

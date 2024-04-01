@@ -13,7 +13,7 @@ class FontSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _size = MediaQuery.of(context).size;
+    final _size = MediaQuery.of(context).size;
     return Consumer2<TextEditingNotifier, ControlNotifier>(
       builder: (context, editorNotifier, controlNotifier, child) {
         return Container(
@@ -46,24 +46,24 @@ class FontSelector extends StatelessWidget {
                           ? Colors.white
                           : Colors.black.withOpacity(0.4),
                       shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white)),
+                      border: Border.all(color: Colors.white),),
                   child: Center(
                     child: Text(
                       'Aa',
                       style: AppFonts.getTextThemeENUM(
-                              controlNotifier.fontList![index])
+                              controlNotifier.fontList![index],)
                           .bodyLarge!
                           .merge(const TextStyle(
                               // fontFamily: controlNotifier.fontList![index],
                               // package: controlNotifier.isCustomFontList
                               //     ? null
                               //     : 'vs_story_designer'
-                              ))
+                              ),)
                           .copyWith(
                               color: index == editorNotifier.fontFamilyIndex
                                   ? Colors.red
                                   : Colors.white,
-                              fontWeight: FontWeight.bold),
+                              fontWeight: FontWeight.bold,),
                     ),
                   ),
                 ),

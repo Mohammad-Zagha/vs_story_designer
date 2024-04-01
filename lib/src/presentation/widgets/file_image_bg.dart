@@ -1,16 +1,16 @@
 // ignore_for_file: library_private_types_in_public_api, no_leading_underscores_for_local_identifiers
 
-import 'dart:io';
-import 'package:flutter/material.dart';
 import 'dart:async';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:vs_story_designer/src/presentation/utils/color_detection.dart';
 
 class FileImageBG extends StatefulWidget {
+  const FileImageBG(
+      {required this.filePath, required this.generatedGradient, super.key,});
   final File? filePath;
   final void Function(Color color1, Color color2) generatedGradient;
-  const FileImageBG(
-      {super.key, required this.filePath, required this.generatedGradient});
   @override
   _FileImageBGState createState() => _FileImageBGState();
 }
@@ -31,24 +31,24 @@ class _FileImageBGState extends State<FileImageBG> {
     Timer.periodic(const Duration(milliseconds: 500), (callback) async {
       if (imageKey.currentState!.context.size!.height == 0.0) {
       } else {
-        var cd1 = await ColorDetection(
+        final cd1 = await ColorDetection(
           currentKey: currentKey,
           paintKey: paintKey,
           stateController: stateController,
         ).searchPixel(
-            Offset(imageKey.currentState!.context.size!.width / 2, 480));
-        var cd12 = await ColorDetection(
+            Offset(imageKey.currentState!.context.size!.width / 2, 480),);
+        final cd12 = await ColorDetection(
           currentKey: currentKey,
           paintKey: paintKey,
           stateController: stateController,
         ).searchPixel(
-            Offset(imageKey.currentState!.context.size!.width / 2.03, 530));
+            Offset(imageKey.currentState!.context.size!.width / 2.03, 530),);
         color1 = cd1;
         color2 = cd12;
         setState(() {});
         widget.generatedGradient(color1, color2);
         callback.cancel();
-        stateController.close();
+        await stateController.close();
       }
     });
     super.initState();
@@ -56,7 +56,7 @@ class _FileImageBGState extends State<FileImageBG> {
 
   @override
   Widget build(BuildContext context) {
-    var _size = MediaQuery.of(context).size;
+    final _size = MediaQuery.of(context).size;
     return SizedBox(
         height: _size.height,
         width: _size.width,
@@ -67,6 +67,6 @@ class _FileImageBGState extends State<FileImageBG> {
               File(widget.filePath!.path),
               key: imageKey,
               filterQuality: FilterQuality.high,
-            ))));
+            ),),),);
   }
 }

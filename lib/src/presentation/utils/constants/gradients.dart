@@ -5,16 +5,16 @@ import 'package:vs_story_designer/src/presentation/utils/Extensions/hexColor.dar
 List<List<Color>> gradientBackgroundColors = [
   [
     const Color.fromARGB(255, 89, 2, 110),
-    const Color.fromARGB(255, 82, 2, 195)
+    const Color.fromARGB(255, 82, 2, 195),
   ],
   [const Color.fromRGBO(240, 19, 77, 1), const Color.fromRGBO(228, 0, 124, 1)],
   [
     const Color.fromRGBO(255, 190, 32, 1),
-    const Color.fromRGBO(251, 112, 71, 1)
+    const Color.fromRGBO(251, 112, 71, 1),
   ],
   [
     const Color.fromRGBO(255, 255, 255, 1),
-    const Color.fromRGBO(234, 236, 255, 1)
+    const Color.fromRGBO(234, 236, 255, 1),
   ],
   [HexColor.fromHex('#2AA8F2'), HexColor.fromHex('#A800FF')],
   [HexColor.fromHex('#A800FF'), HexColor.fromHex('#2AA8F2')],
@@ -22,7 +22,7 @@ List<List<Color>> gradientBackgroundColors = [
   [
     HexColor.fromHex('#33CD11'),
     HexColor.fromHex('#33CD75'),
-    HexColor.fromHex('#0099FF')
+    HexColor.fromHex('#0099FF'),
   ],
   [HexColor.fromHex('#FF0043'), HexColor.fromHex('#FFAA20')],
   [HexColor.fromHex('#9911AA'), HexColor.fromHex('#FF0013')],
@@ -34,7 +34,7 @@ List<List<Color>> gradientBackgroundColors = [
     HexColor.fromHex('#FFAA00'),
     HexColor.fromHex('#009508'),
     HexColor.fromHex('#0078FF'),
-    HexColor.fromHex('#8001AA')
+    HexColor.fromHex('#8001AA'),
   ],
   [const Color(0xFFee9ca7), const Color(0xFFffdde1)],
   [const Color(0xFF2193b0), const Color(0xFF6dd5ed)],

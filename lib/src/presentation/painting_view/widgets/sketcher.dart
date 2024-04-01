@@ -4,9 +4,9 @@ import 'package:vs_story_designer/src/domain/models/painting_model.dart';
 import 'package:vs_story_designer/src/presentation/utils/constants/painting_type.dart';
 
 class Sketcher extends CustomPainter {
-  final List<PaintingModel> lines;
 
   Sketcher({required this.lines});
+  final List<PaintingModel> lines;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -40,7 +40,7 @@ class Sketcher extends CustomPainter {
                 // capEnd: true,
                 // capStart: true,
                 simulatePressure: true,
-              ));
+              ),);
           break;
         case PaintingType.marker:
           paint = Paint()
@@ -66,7 +66,7 @@ class Sketcher extends CustomPainter {
 
                 /// on complete line
                 isComplete: lines[i].isComplete,
-              ));
+              ),);
           break;
         case PaintingType.neon:
           paint = Paint()
@@ -101,7 +101,7 @@ class Sketcher extends CustomPainter {
                 // taperEnd: 0,
                 // capStart: true,
                 // capEnd: true
-              ));
+              ),);
           break;
       }
 
@@ -113,7 +113,7 @@ class Sketcher extends CustomPainter {
         /// If the path only has one line, draw a dot.
         path.addOval(Rect.fromCircle(
             center: Offset(outlinePoints[0].dx, outlinePoints[0].dy),
-            radius: 1));
+            radius: 1,),);
       } else {
         /// Otherwise, draw a line that connects each point with a curve.
         path.moveTo(outlinePoints[0].dx, outlinePoints[0].dy);
@@ -122,7 +122,7 @@ class Sketcher extends CustomPainter {
           final p0 = outlinePoints[i];
           final p1 = outlinePoints[i + 1];
           path.quadraticBezierTo(
-              p0.dx, p0.dy, (p0.dx + p1.dx) / 2, (p0.dy + p1.dy) / 2);
+              p0.dx, p0.dy, (p0.dx + p1.dx) / 2, (p0.dy + p1.dy) / 2,);
         }
       }
 

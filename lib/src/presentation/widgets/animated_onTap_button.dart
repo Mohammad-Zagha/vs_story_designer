@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AnimatedOnTapButton extends StatefulWidget {
+
+  const AnimatedOnTapButton(
+      {required this.onTap, required this.child, super.key, this.onLongPress,});
   final Widget child;
   final void Function() onTap;
   final Function()? onLongPress;
-
-  const AnimatedOnTapButton(
-      {super.key, required this.onTap, required this.child, this.onLongPress});
 
   @override
   _AnimatedOnTapButtonState createState() => _AnimatedOnTapButtonState();
@@ -29,7 +29,6 @@ class _AnimatedOnTapButtonState extends State<AnimatedOnTapButton>
       _controllerA = AnimationController(
         vsync: this,
         lowerBound: 0.95,
-        upperBound: 1.0,
         value: 1,
         duration: const Duration(milliseconds: 10),
       );

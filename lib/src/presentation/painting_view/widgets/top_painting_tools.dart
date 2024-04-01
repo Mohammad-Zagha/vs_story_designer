@@ -8,7 +8,8 @@ import 'package:vs_story_designer/src/presentation/utils/constants/painting_type
 import 'package:vs_story_designer/src/presentation/widgets/tool_button.dart';
 
 class TopPaintingTools extends StatefulWidget {
-  const TopPaintingTools({super.key});
+  const TopPaintingTools({required this.doneText, super.key});
+  final String doneText;
 
   @override
   _TopPaintingToolsState createState() => _TopPaintingToolsState();
@@ -38,9 +39,9 @@ class _TopPaintingToolsState extends State<TopPaintingTools> {
                         scale: 0.6,
                         child: const ImageIcon(
                           AssetImage('assets/icons/return.png',
-                              package: 'vs_story_designer'),
+                              package: 'vs_story_designer',),
                           color: Colors.white,
-                        )),
+                        ),),
                   ),
 
                 /// select pen
@@ -63,12 +64,12 @@ class _TopPaintingToolsState extends State<TopPaintingTools> {
                           scale: 1.2,
                           child: ImageIcon(
                             const AssetImage('assets/icons/pen.png',
-                                package: 'vs_story_designer'),
+                                package: 'vs_story_designer',),
                             color: paintingNotifier.paintingType ==
                                     PaintingType.pen
                                 ? Colors.black
                                 : Colors.white,
-                          )),
+                          ),),
                     ),
                     // ignore: prefer_const_constructors
                     // SizedBox(
@@ -91,12 +92,12 @@ class _TopPaintingToolsState extends State<TopPaintingTools> {
                           scale: 1.2,
                           child: ImageIcon(
                             const AssetImage('assets/icons/marker.png',
-                                package: 'vs_story_designer'),
+                                package: 'vs_story_designer',),
                             color: paintingNotifier.paintingType ==
                                     PaintingType.marker
                                 ? Colors.black
                                 : Colors.white,
-                          )),
+                          ),),
                     ),
                     // SizedBox(
                     //   width: 12,
@@ -120,12 +121,12 @@ class _TopPaintingToolsState extends State<TopPaintingTools> {
                           scale: 1.2,
                           child: ImageIcon(
                             const AssetImage('assets/icons/neon.png',
-                                package: 'vs_story_designer'),
+                                package: 'vs_story_designer',),
                             color: paintingNotifier.paintingType ==
                                     PaintingType.neon
                                 ? Colors.black
                                 : Colors.white,
-                          )),
+                          ),),
                     ),
                   ],
                 ),
@@ -172,14 +173,14 @@ class _TopPaintingToolsState extends State<TopPaintingTools> {
                     padding: const EdgeInsets.only(right: 10, top: 10),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 6, horizontal: 12),
+                          vertical: 6, horizontal: 12,),
                       decoration: BoxDecoration(
                           color: Colors.black12,
                           border: Border.all(color: Colors.white, width: 1.5),
-                          borderRadius: BorderRadius.circular(15)),
-                      child: const Text(
-                        'Done',
-                        style: TextStyle(
+                          borderRadius: BorderRadius.circular(15),),
+                      child: Text(
+                        widget.doneText,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 15,
                           fontWeight: FontWeight.w500,

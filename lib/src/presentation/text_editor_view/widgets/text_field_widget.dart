@@ -11,8 +11,8 @@ class TextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _size = MediaQuery.of(context).size;
-    FocusNode _textNode = FocusNode();
+    final _size = MediaQuery.of(context).size;
+    final FocusNode _textNode = FocusNode();
     return Consumer2<TextEditingNotifier, ControlNotifier>(
       builder: (context, editorNotifier, controlNotifier, child) {
         return Center(
@@ -40,9 +40,9 @@ class TextFieldWidget extends StatelessWidget {
                   textNode: _textNode,
                   controlNotifier: controlNotifier,
                   paintingStyle: PaintingStyle.fill,
-                )
+                ),
               ],
-            )),
+            ),),
           ),
         );
       },
@@ -96,7 +96,7 @@ class TextFieldWidget extends StatelessWidget {
       controller: editorNotifier.textController,
       textAlign: editorNotifier.textAlign,
       style: AppFonts.getTextThemeENUM(
-              controlNotifier.fontList![editorNotifier.fontFamilyIndex])
+              controlNotifier.fontList![editorNotifier.fontFamilyIndex],)
           .bodyLarge!
           .merge(
             TextStyle(
@@ -112,7 +112,7 @@ class TextFieldWidget extends StatelessWidget {
                           blurRadius: 3.0,
                           color: editorNotifier.textColor == Colors.black
                               ? Colors.white54
-                              : Colors.black)
+                              : Colors.black,),
                     ],
               backgroundColor: Colors.redAccent,
             ),
@@ -134,7 +134,7 @@ class TextFieldWidget extends StatelessWidget {
               blurRadius: 3.0,
               color: editorNotifier.textColor == Colors.black
                   ? Colors.white54
-                  : Colors.black)
+                  : Colors.black,),
         ],
       ),
       cursorColor: controlNotifier.colorList![editorNotifier.textColor],

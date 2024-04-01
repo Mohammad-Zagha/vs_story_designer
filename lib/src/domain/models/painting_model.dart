@@ -3,6 +3,17 @@ import 'package:perfect_freehand/perfect_freehand.dart';
 import 'package:vs_story_designer/src/presentation/utils/constants/painting_type.dart';
 
 class PaintingModel {
+
+  PaintingModel(
+      this.points,
+      this.size,
+      this.thinning,
+      this.smoothing,
+      this.isComplete,
+      this.lineColor,
+      this.streamline,
+      this.simulatePressure,
+      this.paintingType,);
   /// lines coordinates
   List<PointVector> points;
 
@@ -29,15 +40,4 @@ class PaintingModel {
 
   /// painting type
   PaintingType paintingType = PaintingType.pen;
-
-  PaintingModel(
-      this.points,
-      this.size,
-      this.thinning,
-      this.smoothing,
-      this.isComplete,
-      this.lineColor,
-      this.streamline,
-      this.simulatePressure,
-      this.paintingType);
 }

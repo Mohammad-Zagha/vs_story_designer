@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
@@ -14,14 +14,12 @@ import 'package:vs_story_designer/src/presentation/widgets/animated_onTap_button
 import 'package:vs_story_designer/src/presentation/widgets/tool_button.dart';
 
 class TopTools extends StatefulWidget {
+  const TopTools(
+      {required this.contentKey, required this.context, super.key,
+      this.renderWidget,});
   final GlobalKey contentKey;
   final BuildContext context;
   final Function? renderWidget;
-  const TopTools(
-      {super.key,
-      required this.contentKey,
-      required this.context,
-      this.renderWidget});
 
   @override
   _TopToolsState createState() => _TopToolsState();
@@ -40,30 +38,31 @@ class _TopToolsState extends State<TopTools> {
             decoration: const BoxDecoration(color: Colors.transparent),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 /// close button
                 ToolButton(
                     backGroundColor: Colors.black12,
                     onTap: () async {
-                      exitDialog(
+                      await exitDialog(
                               context: widget.context,
                               contentKey: widget.contentKey,
-                              themeType: controlNotifier.themeType)
+                              themeType: controlNotifier.themeType,)
                           .then((res) {
-                        if (res) Navigator.pop(context);
+                        if (res) {
+                          Navigator.pop(context);
+                        }
                       });
                     },
                     child: const Icon(
                       Icons.close,
                       color: Colors.white,
-                    )),
+                    ),),
 
                 Row(
                   children: [
                     if (controlNotifier.mediaPath.isEmpty)
                       Padding(
-                        padding: const EdgeInsets.only(left: 0),
+                        padding: const EdgeInsets.only(),
                         child: _selectColor(
                             controlProvider: controlNotifier,
                             onTap: () {
@@ -77,7 +76,7 @@ class _TopToolsState extends State<TopTools> {
                                   controlNotifier.gradientIndex += 1;
                                 });
                               }
-                            }),
+                            },),
                       ),
                     ToolButton(
                       backGroundColor: Colors.black12,
@@ -85,7 +84,7 @@ class _TopToolsState extends State<TopTools> {
                           !controlNotifier.isTextEditing,
                       child: const ImageIcon(
                         AssetImage('assets/icons/text.png',
-                            package: 'vs_story_designer'),
+                            package: 'vs_story_designer',),
                         color: Colors.white,
                         size: 20,
                       ),
@@ -102,7 +101,7 @@ class _TopToolsState extends State<TopTools> {
                             color: controlNotifier.enableTextShadow
                                 ? Colors.black
                                 : Colors.white,
-                            size: 30)),
+                            size: 30,),),
                     // ToolButton(
                     //     child: const ImageIcon(
                     //       AssetImage('assets/icons/stickers.png',
@@ -122,10 +121,10 @@ class _TopToolsState extends State<TopTools> {
                         },
                         child: const ImageIcon(
                           AssetImage('assets/icons/draw.png',
-                              package: 'vs_story_designer'),
+                              package: 'vs_story_designer',),
                           color: Colors.white,
                           size: 20,
-                        )),
+                        ),),
                   ],
                 ),
 
@@ -146,7 +145,7 @@ class _TopToolsState extends State<TopTools> {
                     onTap: () async {
                       if (paintingNotifier.lines.isNotEmpty ||
                           itemNotifier.draggableWidget.isNotEmpty) {
-                        showDialog(
+                        await showDialog(
                             context: context,
                             barrierDismissible: false,
                             builder: (BuildContext context) {
@@ -158,11 +157,11 @@ class _TopToolsState extends State<TopTools> {
                                       child: Container(
                                           margin: const EdgeInsets.all(50),
                                           child:
-                                              const CircularProgressIndicator())),
+                                              const CircularProgressIndicator(),),),
                                 ],
                               );
-                            });
-                        for (var element in itemNotifier.draggableWidget) {
+                            },);
+                        for (final element in itemNotifier.draggableWidget) {
                           if (element.type == ItemType.gif ||
                               element.animationType != TextAnimationType.none) {
                             setState(() {
@@ -175,16 +174,15 @@ class _TopToolsState extends State<TopTools> {
                           await widget.renderWidget!();
                         } else {
                           debugPrint('creating image');
-                          var response = await takePicture(
+                          final response = await takePicture(
                               contentKey: widget.contentKey,
                               context: context,
                               saveToGallery: true,
-                              fileName: controlNotifier.folderName);
+                              fileName: controlNotifier.folderName,);
                           if (response) {
                             showToast('Successfully saved');
                           } else {}
                         }
-                        // ignore: use_build_context_synchronously
                         Navigator.of(context, rootNavigator: true).pop();
                       } else {
                         showToast('Design something to save image');
@@ -196,10 +194,10 @@ class _TopToolsState extends State<TopTools> {
                     },
                     child: const ImageIcon(
                       AssetImage('assets/icons/download.png',
-                          package: 'vs_story_designer'),
+                          package: 'vs_story_designer',),
                       color: Colors.white,
                       size: 20,
-                    )),
+                    ),),
               ],
             ),
           ),
@@ -228,7 +226,7 @@ class _TopToolsState extends State<TopTools> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: controlProvider
-                      .gradientColors![controlProvider.gradientIndex]),
+                      .gradientColors![controlProvider.gradientIndex],),
               shape: BoxShape.circle,
             ),
           ),
