@@ -23,12 +23,20 @@ class TopTools extends StatefulWidget {
     this.renderWidget,
     this.emptyImageText,
     this.savedImageText,
+    this.discardHeading,
+    this.discardText,
+    this.discardConfirm,
+    this.discardDecline,
   });
   final GlobalKey contentKey;
   final BuildContext context;
   final Function? renderWidget;
   final String? emptyImageText;
   final String? savedImageText;
+  final String? discardHeading;
+  final String? discardText;
+  final String? discardConfirm;
+  final String? discardDecline;
 
   @override
   _TopToolsState createState() => _TopToolsState();
@@ -56,6 +64,10 @@ class _TopToolsState extends State<TopTools> {
                       context: widget.context,
                       contentKey: widget.contentKey,
                       themeType: controlNotifier.themeType,
+                      discardHeading: widget.discardHeading,
+                      discardText: widget.discardText,
+                      discardConfirm: widget.discardConfirm,
+                      discardDecline: widget.discardDecline,
                     ).then((res) {
                       if (res) {
                         Navigator.pop(context);

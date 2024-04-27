@@ -416,6 +416,10 @@ class _MainViewState extends State<MainView> {
                               context: context,
                               savedImageText: widget.savedImageText,
                               emptyImageText: widget.emptyImageText,
+                              discardHeading: widget.discardHeading,
+                              discardText: widget.discardText,
+                              discardConfirm: widget.discardConfirm,
+                              discardDecline: widget.discardDecline,
                               // renderWidget: () => startRecording(
                               //     controlNotifier: controlNotifier,
                               //     renderingNotifier: renderingNotifier,
