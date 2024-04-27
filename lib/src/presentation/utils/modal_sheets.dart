@@ -45,6 +45,10 @@ Future<bool> exitDialog({
   required context,
   required contentKey,
   required ThemeType themeType,
+  discardHeading,
+  discardText,
+  discardConfirm,
+  discardDecline,
 }) async {
   return (await showDialog(
         context: context,
@@ -81,7 +85,7 @@ Future<bool> exitDialog({
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                    'Discard Edits?',
+                    discardHeading ?? 'Discard Edits?',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
@@ -95,7 +99,7 @@ Future<bool> exitDialog({
                     height: 20,
                   ),
                   Text(
-                    "If you go back now, you'll lose all the edits you've made.",
+                    discardText ?? "If you go back now, you'll lose all the edits you've made.",
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
@@ -124,7 +128,7 @@ Future<bool> exitDialog({
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Discard',
+                          discardConfirm ?? 'Discard',
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.redAccent.shade200,
@@ -195,7 +199,7 @@ Future<bool> exitDialog({
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Cancel',
+                          discardDecline ?? 'Cancel',
                           style: TextStyle(
                             fontSize: 16,
                             color: themeType == ThemeType.light

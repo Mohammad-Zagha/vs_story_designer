@@ -58,6 +58,10 @@ class MainView extends StatefulWidget {
     this.emptyImageText,
     this.savedImageText,
     this.mediaPath,
+    this.discardHeading,
+    this.discardText,
+    this.discardConfirm,
+    this.discardDecline,
   });
 
   /// editor custom font families
@@ -105,6 +109,10 @@ class MainView extends StatefulWidget {
   final String? doneText;
   final String? emptyImageText;
   final String? savedImageText;
+  final String? discardHeading;
+  final String? discardText;
+  final String? discardConfirm;
+  final String? discardDecline;
 
 // share image file path
   final String? mediaPath;
@@ -626,6 +634,10 @@ class _MainViewState extends State<MainView> {
             context: context,
             contentKey: contentKey,
             themeType: widget.themeType!,
+            discardHeading: widget.discardHeading,
+            discardText: widget.discardText,
+            discardConfirm: widget.discardConfirm,
+            discardDecline: widget.discardDecline,
           );
     }
     return false;

@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable, library_private_types_in_public_api
 library vs_story_designer;
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -113,25 +112,32 @@ enum FontType {
 }
 
 class VSStoryDesigner extends StatefulWidget {
+  const VSStoryDesigner({
+    required this.onDone,
+    required this.centerText,
+    super.key,
+    this.giphyKey,
+    this.themeType,
+    this.middleBottomWidget,
+    this.colorList,
+    this.gradientColors,
+    this.fileName,
+    this.fontFamilyList,
+    this.isCustomFontList,
+    this.onBackPress,
+    this.onDoneButtonStyle,
+    this.editorBackgroundColor,
+    this.galleryThumbnailQuality,
+    this.doneText,
+    this.emptyImageText,
+    this.savedImageText,
+    this.mediaPath,
+    this.discardHeading,
+    this.discardText,
+    this.discardConfirm,
+    this.discardDecline,
+  });
 
-  const VSStoryDesigner(
-      {required this.onDone, required this.centerText, super.key,
-      this.giphyKey,
-      this.themeType,
-      this.middleBottomWidget,
-      this.colorList,
-      this.gradientColors,
-      this.fileName,
-      this.fontFamilyList,
-      this.isCustomFontList,
-      this.onBackPress,
-      this.onDoneButtonStyle,
-      this.editorBackgroundColor,
-      this.galleryThumbnailQuality,
-      this.doneText,
-      this.emptyImageText,
-      this.savedImageText,
-      this.mediaPath,});
   /// editor custom font families
   final List<FontType>? fontFamilyList;
 
@@ -176,6 +182,10 @@ class VSStoryDesigner extends StatefulWidget {
   final String? doneText;
   final String? emptyImageText;
   final String? savedImageText;
+  final String? discardHeading;
+  final String? discardText;
+  final String? discardConfirm;
+  final String? discardDecline;
 
   // share image file path
   final String? mediaPath;
@@ -190,10 +200,13 @@ class _VSStoryDesignerState extends State<VSStoryDesigner> {
     // Paint.enableDithering = true;
     WidgetsFlutterBinding.ensureInitialized();
     SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],);
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-    ),);
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+    );
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
+    );
     super.initState();
   }
 
@@ -235,6 +248,10 @@ class _VSStoryDesignerState extends State<VSStoryDesigner> {
         doneText: widget.doneText,
         emptyImageText: widget.emptyImageText,
         savedImageText: widget.savedImageText,
+        discardHeading: widget.discardHeading,
+        discardText: widget.discardText,
+        discardConfirm: widget.discardConfirm,
+        discardDecline: widget.discardDecline,
       ),
     );
   }
